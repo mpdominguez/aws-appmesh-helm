@@ -21,18 +21,22 @@ It will setup:
 
 ## Deploy an EKS cluster
 
-```bash
-# install K8s CLI, Helm and eksctl
-brew tap weaveworks/tap
-brew install kubernetes-cli kubernetes-helm weaveworks/tap/eksctl
+### Install K8s CLI, Helm and eksctl
+Create Cloud9 workspace - https://eksworkshop.com/prerequisites/self_paced/workspace/
+Create an IAM role - https://eksworkshop.com/prerequisites/self_paced/iamrole/
+Attach the IAM role - https://eksworkshop.com/prerequisites/self_paced/ec2instance/
+Install kubernetes tools - https://eksworkshop.com/prerequisites/k8stools/
+Update IAM settings for your workspace - https://eksworkshop.com/prerequisites/workspaceiam/
+Install eksctl - https://eksworkshop.com/eksctl/prerequisites/
 
+```bash
 # create a cluster configuration file (replace the region with your choice)
 cat << EOF > cluster.yaml
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
   name: appmesh-demo
-  region: eu-west-1
+  region: us-west-2
 nodeGroups:
   - name: default
     instanceType: m5.large
@@ -59,17 +63,8 @@ ip-192-168-14-229.eu-west-1.compute.internal   Ready    <none>   0d   v1.11.5
 ```
 
 ## Install Helm
-
-```bash
-# install helm cli
-brew install kubernetes-helm
-
-# setup k8s rbac for helm
-kubectl apply -f https://raw.githubusercontent.com/PaulMaddox/aws-appmesh-helm/master/scripts/helm-rbac.yaml
-
-# depoy helm into the cluster
-helm init --service-account tiller
-```
+### Install helm cli, setup rbac and init with tiller
+Install Helm - https://eksworkshop.com/helm_root/helm_intro/install/
 
 ## Install AWS App Mesh
 
@@ -148,7 +143,7 @@ It's completely possible to disable AWS X-Ray, or the StatsD prometheus exporter
 AWS App Mesh will automatically emit metrics to AWS X-Ray (via the auto-injected AWS X-Ray daemon sidecar):
 
 ```bash
-open https://eu-west-1.console.aws.amazon.com/xray/home?region=eu-west-1#/service-map
+open https://us-west-2.console.aws.amazon.com/xray/home?region=eu-west-1#/service-map
 ```
 
 From here you can explore your microservices within the AWS X-Ray console.
@@ -163,8 +158,26 @@ From here you can explore your microservices within the AWS X-Ray console.
 Promtheus & Grafana dashboards have also automatically been configured.
 
 ```bash
-kubectl -n appmesh-system port-forward svc/grafana 3000:3000
-open http://localhost:3000
+kubectl -n appmesh-system edit svc/grafana
+```
+Modify this line
+```bash
+  type: ClusterIP
+```
+For
+```bash
+   type: LoadBalancer
+```
+ 
+And check the Load Balancer URL
+```bash
+workshop:~/environment $ kubectl -n appmesh-system get svc/grafana
+NAME      TYPE           CLUSTER-IP      EXTERNAL-IP                                                              PORT(S)          AGE
+grafana   LoadBalancer   10.100.200.64   a80a350a7c5f211e9b40f0ebc25e4741-884267102.us-west-2.elb.amazonaws.com   3000:30063/TCP   13m
+```
+The load balancer's URL is listening in the port 3000, in this example:
+```bash
+open http://a80a350a7c5f211e9b40f0ebc25e4741-884267102.us-west-2.elb.amazonaws.com:3000
 ```
 
 There are two preconfigured dashboards provided; one that provides a general overview of AWS App Mesh, and another that provides a per-service view. 
