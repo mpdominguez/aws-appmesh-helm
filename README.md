@@ -23,10 +23,15 @@ It will setup:
 
 ### Install K8s CLI, Helm and eksctl
 Create Cloud9 workspace - https://eksworkshop.com/prerequisites/self_paced/workspace/
+
 Create an IAM role - https://eksworkshop.com/prerequisites/self_paced/iamrole/
+
 Attach the IAM role - https://eksworkshop.com/prerequisites/self_paced/ec2instance/
+
 Install kubernetes tools - https://eksworkshop.com/prerequisites/k8stools/
+
 Update IAM settings for your workspace - https://eksworkshop.com/prerequisites/workspaceiam/
+
 Install eksctl - https://eksworkshop.com/eksctl/prerequisites/
 
 ```bash
