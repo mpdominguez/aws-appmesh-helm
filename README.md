@@ -63,8 +63,8 @@ You can verify the cluster created successfully by running `kubectl get nodes`. 
 
 ```
 NAME                                           STATUS   ROLES    AGE   VERSION
-ip-192-168-10-51.eu-west-1.compute.internal    Ready    <none>   0d   v1.11.5
-ip-192-168-14-229.eu-west-1.compute.internal   Ready    <none>   0d   v1.11.5
+ip-192-168-10-51.us-west-2.compute.internal    Ready    <none>   0d   v1.11.5
+ip-192-168-14-229.us-west-2.compute.internal   Ready    <none>   0d   v1.11.5
 ```
 
 ## Install Helm
