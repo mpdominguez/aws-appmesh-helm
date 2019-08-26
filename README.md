@@ -79,31 +79,6 @@ Deploy AWS App Mesh. This will deploy a mutating webhook admission controller to
 helm install -n aws-appmesh --namespace appmesh-system https://github.com/PaulMaddox/aws-appmesh-helm/releases/latest/download/aws-appmesh.tgz
 ```
 
-### Install AWS App Mesh without X-Ray or StatsD
-If you do not want X-Ray or StatsD/Prometheus integration built into your App Mesh deployment, create a yaml file and add the following:
-
-```yaml
-aws-appmesh-inject:
-  enableStatsD: false
-  enableStatsDTags: false
-  enableStatsDExporter: false
-  enableXRay: false
-```
-Then specify that override file on the command line:
-```bash
-helm install -n aws-appmesh --namespace appmesh-system -f ./override_yaml_filename https://github.com/PaulMaddox/aws-appmesh-helm/releases/latest/download/aws-appmesh.tgz
-```
-
-Confirm the AWS App Mesh pods are up and running with `kubectl get pods -n appmesh-system`. The output should look similar to below:
-
-```bash
-NAME                                      READY   STATUS              RESTARTS   AGE
-aws-appmesh-controller-7bcf7d87cf-7lgbq   1/1     Running             0          1m
-aws-appmesh-grafana-5b87c9cf9-8m67p       1/1     Running             0          1m
-aws-appmesh-inject-7786879564-472w2       1/1     Running             0          1m
-aws-appmesh-prometheus-565c8bcb56-8ptz9   1/1     Running             0          1m
-```
-
 ## Deploy the demo application
 
 Deploy a demo application that consists of a service that generates HTTP load, and another service that recieves load (nginx). Neither of these applications have been instrumented in any way, but we will get rich metrics from AWS App Mesh/Envoy. 
