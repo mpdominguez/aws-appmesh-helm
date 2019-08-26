@@ -116,8 +116,6 @@ These are:
  - AWS X-Ray daemon sidecar
  - StatsD Prometheus exporter
 
-It's completely possible to disable AWS X-Ray, or the StatsD prometheus exporter if you do not need them. [See this section for more info](#install-aws-app-mesh-without-x-ray-or-statsd)
-
 ## AWS X-Ray Integration
 
 AWS App Mesh will automatically emit metrics to AWS X-Ray (via the auto-injected AWS X-Ray daemon sidecar):
