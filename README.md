@@ -148,7 +148,7 @@ It's completely possible to disable AWS X-Ray, or the StatsD prometheus exporter
 AWS App Mesh will automatically emit metrics to AWS X-Ray (via the auto-injected AWS X-Ray daemon sidecar):
 
 ```bash
-open https://us-west-2.console.aws.amazon.com/xray/home?region=eu-west-1#/service-map
+open https://us-west-2.console.aws.amazon.com/xray/home?region=us-west-2#/service-map
 ```
 
 From here you can explore your microservices within the AWS X-Ray console.
